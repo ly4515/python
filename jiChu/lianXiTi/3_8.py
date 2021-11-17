@@ -1,0 +1,20 @@
+place = ['xian', 'sichuan', 'biangdiao', 'huanghe', 'xiamen']
+print("初始顺序")
+print(place)
+print("字母顺序")
+print(sorted(place))
+print("列表顺序")
+print(place)
+print("字母相反顺序")
+print(sorted(place, reverse = True))
+print("列表顺序")
+print(place)
+print("列表反向顺序")
+place.reverse()
+print(place)
+print("恢复列表原顺序")
+place.reverse()
+print(place)
+print(place[-1])
+
+
