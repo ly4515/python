@@ -1,4 +1,4 @@
-import os, time, zipfile
+import paramiko, time, os
 strCVSPath = "D:/mine/Docker"  #要压缩的文件夹路径
 strZipPath = "D:/mine/zip/"     # 压缩后存放路径
 timelist = time.localtime()
@@ -8,13 +8,16 @@ day = str(timelist[2])
 strFileName = year + "_" + month + "_" + day +'.zip' # 压缩包名
 cmdstr = strZipPath + strFileName
 
-def zip():       # 压缩zip包
-    z = zipfile.ZipFile(cmdstr, 'w', zipfile.ZIP_DEFLATED, allowZip64=True)   # 大文件压缩，默认FALSE
-    for dirpath, dirnames, filenames in os.walk(strCVSPath):
+#上传文件到服务器
+def upload():
+    tran = paramiko.Transport("152.67.215.232", 22)
+    tran.connect(username="root", password="Ly@1016!")
+    sftp = paramiko.SFTPClient.from_transport(tran)
+    remoterpath = "/home/ly/File/"
+    for dirpath, dirnames, filenames in os.walk(strZipPath):
         fpath = dirpath.replace(strCVSPath,'')
         fpath = fpath and fpath + os.sep or ''
         for filename in filenames:
-            z.write(os.path.join(dirpath, filename),fpath+filename)
-    z.close()
-
-zip()
+            sftp.put(cmdstr, os.path.join(remoterpath,filename))
+    tran.close()
+upload()

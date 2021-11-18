@@ -1,4 +1,4 @@
-import os, sys, time, zipfile,glob
+import os,glob
 ###remove###
 strZipPath = "D:" + os.sep + "mine"+  os.sep + "ddd" +  os.sep
 for file in glob.glob(os.path.join(strZipPath,"*.zip")):
