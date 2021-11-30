@@ -1,2 +1,1 @@
-a = abs(5)
-print(a)
+print("111")
