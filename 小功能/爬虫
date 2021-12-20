@@ -1,0 +1,16 @@
+import requests
+from requests.models import Response
+
+url = "http://152.67.215.232:8081/dashboard/groups/"
+'''
+header = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3880.400 QQBrowser/10.8.4554.400',
+    'Cookie': 'sidebar_collapsed = false; _gitlab_session = 28481297dbfff96801afbccfea802250'}
+response = requests.get(url, headers=header)
+'''
+response = requests.get(url)
+print(response.status_code)
+text = (response.text)
+
+file = open('text.txt', 'w')
+file.write(text)

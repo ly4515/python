@@ -2,7 +2,7 @@ import os
 
 
 def find_answer(question):
-    with open('reply.txt', 'r', encoding="utf-8") as f:
+    with open('reply.txt', 'r') as f:
         while True:
             line = f.readline()
             if not line:  # 也可以为if  line==''
