@@ -1,0 +1,4 @@
+from selenium import webdriver #导入包
+
+driver = webdriver.Chrome()  #打开Chrome浏览器
+driver.get('http://www.baidu.com')  #输入url,打开百度首页
