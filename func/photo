@@ -1,7 +1,0 @@
-import requests
-
-url = 'https://pic.netbian.com/'
-rep = requests.get(url)
-text = rep.text
-print(rep)
-print(text)
