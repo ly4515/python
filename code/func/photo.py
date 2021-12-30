@@ -1,6 +1,7 @@
 import requests
 from lxml import etree
 import time
+import xlsxwriter
 
 url = 'https://pic.netbian.com/'
 header = {
@@ -13,8 +14,19 @@ html = etree.HTML(text)
 # 作为_Element对象，可以方便的使用getparent()、remove()、xpath()等方法。
 lists = html.xpath('//div[@class="slist"]/ul/li/a/span/img/@src')
 
+path = 'D:/mine/Python/photo/'
+wb = xlsxwriter.Workbook('D:/mine/Python/excel/photo.xlsx')
+sheet = wb.add_worksheet('photo')
+n = 0
+
 for list in lists:
     full_url = url + list
+    name = '%s.jpg' % time.time()
     re = requests.get(full_url)
-    with open('D:/mine/Python/photo/+%s.jpg' % time.time(), 'wb') as f:
+    with open(path + name, 'wb') as f:
         f.write(re.content)   # 用content属性获得bytes对象，二进制数据
+    sheet.write(n, 0, name)
+    sheet.write(n, 1, full_url)
+    sheet.write_url()
+    n = n+1
+wb.close()
