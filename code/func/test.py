@@ -1,11 +1,6 @@
-import csv
-import random
-
-with open('scores.csv', 'w', encoding='UTF-8') as file:
-    writer = csv.writer(file)
-    writer.writerow(['姓名', '语文', '数学', '英语'])
-    names = ['关羽', '张飞', '赵云', '马超', '黄忠']
-    for name in names:
-        scores = [random.randrange(50, 101) for _ in range(3)]
-        scores.insert(0, name)
-        writer.writerow(scores)
+from bs4 import BeautifulSoup
+import requests
+url = 'http://exercise.kingname.info/ajax_1_postbackend'
+json = {'name': 'll', 'age': 2}
+respose = requests.post(url, json=json).content.decode()
+print(respose)
