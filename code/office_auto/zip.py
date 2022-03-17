@@ -6,8 +6,8 @@
 5.对 长期未使用 文件夹进行压缩处理，并在名字上加上今天日期
 '''
 
+from datetime import datetime
 import os
-import datetime
 import shutil
 import zipfile
 
@@ -15,15 +15,19 @@ path = input('请输入路径:')
 os.chdir(path)
 
 file_list = []
-for dirpath, dirnames, fiels in os.walk('./'):
-    # 返回迭代器
+for dirpath, dirnames, files in os.walk('./'):
     for file in os.scandir(dirpath):
-        if file.is_file:
-            file_mtime = datetime.datetime.fromtimestamp(file.stat().st_mtime)
-            date_c = datetime.datetime.now()-file_mtime
-            if date_c.days >= 1 and file.name.endswith('.md'):
-                new_name = f"{file_mtime.strftime('%Y-%m-%d')}-{file.name}"
-                os.rename(file.name, new_name)
+        if not file.is_dir():
+            # 文件时间戳
+            file_time = file.stat().st_mtime
+            # fromtimestamp格式化时间戳
+            file_datetime = datetime.fromtimestamp(file_time)
+            # 时间差
+            datetime_delta = datetime.now()-file_datetime
+            if datetime_delta.days >= 1 and file.name.endswith('.md'):
+                new_name = f"{file_datetime.strftime('%Y-%m-%d')}-{file.name}"
+                # 重命名
+                os.rename(dirpath+'/'+file.name, new_name)
                 file_list.append(new_name)
 
 if not os.path.exists('长期未使用'):
@@ -35,7 +39,7 @@ for file1 in file_list:
 os.chdir('长期未使用/')
 zipfile_list = os.listdir('./')
 
-zip_filename = f'{datetime.datetime.now().strftime("%Y-%m-%d")}_长期未使用.zip'
+zip_filename = f'{datetime.now().strftime("%Y-%m-%d")}_长期未使用.zip'
 with zipfile.ZipFile(zip_filename, 'w') as zipobj:
     for file in zipfile_list:
         zipobj.write(file)
